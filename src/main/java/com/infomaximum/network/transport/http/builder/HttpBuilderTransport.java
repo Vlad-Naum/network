@@ -45,9 +45,12 @@ public class HttpBuilderTransport extends BuilderTransport {
         addCompressResponseMimeType("text/html");
         addCompressResponseMimeType("text/css");
         addCompressResponseMimeType("text/javascript");
+        addCompressResponseMimeType("text/csv");
         addCompressResponseMimeType("application/x-font-ttf");
         addCompressResponseMimeType("application/javascript");
         addCompressResponseMimeType("application/json");
+        addCompressResponseMimeType("application/vnd.ms-excel");
+        addCompressResponseMimeType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
     }
 
     public HttpBuilderTransport addConnector(BuilderHttpConnector builderConnector){
