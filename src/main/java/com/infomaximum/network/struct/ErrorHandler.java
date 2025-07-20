@@ -5,6 +5,6 @@ import org.eclipse.jetty.server.Response;
 
 public interface ErrorHandler {
 
-    void handle(Request request, Response response, Throwable throwable);
+    void handle(Request request, Response response, Integer errorCode, String errorMessage, Throwable throwable);
 
 }

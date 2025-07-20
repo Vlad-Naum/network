@@ -62,7 +62,7 @@ public class ErrorHandlerTest {
         private Throwable throwable;
 
         @Override
-        public void handle(Request request, Response response, Throwable throwable) {
+        public void handle(Request request, Response response, Integer errorCode, String errorMessage,Throwable throwable) {
             if (this.throwable != null) {
                 Assertions.fail();
                 throw new RuntimeException();
