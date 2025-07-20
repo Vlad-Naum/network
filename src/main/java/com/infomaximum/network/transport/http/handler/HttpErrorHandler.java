@@ -18,11 +18,10 @@ public class HttpErrorHandler extends ErrorHandler {
     @Override
     public boolean handle(Request request, Response response, Callback callback) {
         try {
-            Integer errorCode = (Integer) request.getAttribute(ErrorHandler.ERROR_STATUS);
             String errorMessage = (String) request.getAttribute(ErrorHandler.ERROR_MESSAGE);
             Throwable throwable =  (Throwable) request.getAttribute(ErrorHandler.ERROR_EXCEPTION);
 
-            errorHandler.handle(request, response, errorCode, errorMessage, throwable);
+            errorHandler.handle(request, response, errorMessage, throwable);
         } catch (Throwable thr) {
             uncaughtExceptionHandler.uncaughtException(Thread.currentThread(), thr);
         }
