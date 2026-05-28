@@ -48,7 +48,7 @@ public class CoreWSBadRequestTest {
         session.close();//Закрываем соединение
     }
 
-    public static class ClientEndPoint implements Session.Listener  {
+    public static class ClientEndPoint implements Session.Listener.AutoDemanding  {
 
         private final CompletableFuture<Boolean> responseFuture;
 

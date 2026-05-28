@@ -1,4 +1,5 @@
 module com.infomaximum.network {
+    requires static org.checkerframework.checker.qual;
     requires net.minidev.jsonsmart;
     requires org.reflections;
     requires spring.web;

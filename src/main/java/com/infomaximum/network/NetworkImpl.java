@@ -9,6 +9,8 @@ import com.infomaximum.network.struct.UpgradeRequest;
 import com.infomaximum.network.struct.info.NetworkInfo;
 import com.infomaximum.network.transport.Transport;
 import com.infomaximum.network.transport.TransportListener;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.eclipse.jetty.websocket.common.WebSocketSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,10 +111,11 @@ public class NetworkImpl implements Network, TransportListener {
     }
 
     @Override
-    public void onDisconnect(Transport transport, Object channel, int statusCode, Throwable throwable) {
+    public void onDisconnect(@NonNull Transport transport, @NonNull Object channel, int statusCode, @Nullable Throwable throwable) {
         TransportSession transportSession = transportSessions.remove(channel);
         if (transportSession != null) {
-            log.info("{} onDisconnect, code: {}, message: {}", transportSession.getSession(), statusCode, throwable.getMessage());
+            String message = throwable != null ? throwable.toString() : "<normal close>";
+            log.info("{} onDisconnect, code: {}, message: {}", transportSession.getSession(), statusCode, message);
             transportSession.destroyed();
 
             //Оповещаем подписчиков
