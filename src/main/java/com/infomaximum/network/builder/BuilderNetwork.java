@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by kris on 26.08.16.
@@ -75,11 +76,16 @@ public class BuilderNetwork {
                 uncaughtExceptionHandler
         );
 
+        Set<String> supportedProtocols = new HashSet<>();
+        for (Protocol protocol : protocols) {
+            supportedProtocols.add(protocol.getName());
+        }
+
         if (builderTransports != null) {
             for (BuilderTransport builderTransport : builderTransports) {
                 Transport transport;
                 if (builderTransport instanceof HttpBuilderTransport) {
-                    transport = new HttpTransport((HttpBuilderTransport) builderTransport, uncaughtExceptionHandler);
+                    transport = new HttpTransport((HttpBuilderTransport) builderTransport, supportedProtocols, uncaughtExceptionHandler);
                 } else {
                     throw new RuntimeException("Nothing type builder transport: " + builderTransport);
                 }

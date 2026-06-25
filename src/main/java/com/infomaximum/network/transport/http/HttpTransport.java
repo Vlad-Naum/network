@@ -22,6 +22,7 @@ import org.eclipse.jetty.server.handler.DefaultHandler;
 import org.eclipse.jetty.server.handler.gzip.GzipHandler;
 import org.eclipse.jetty.ee10.servlet.ServletContextHandler;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.eclipse.jetty.websocket.api.Callback;
 import org.eclipse.jetty.websocket.api.Session;
 import org.slf4j.Logger;
@@ -40,7 +41,7 @@ public class HttpTransport extends Transport<Session> {
     private final Server server;
     private final List<Supplier<? extends HttpConnectorInfo>> connectorInfoSuppliers;
 
-    public HttpTransport(final HttpBuilderTransport httpBuilderTransport, Thread.UncaughtExceptionHandler uncaughtExceptionHandler) throws NetworkException {
+    public HttpTransport(final HttpBuilderTransport httpBuilderTransport, @NonNull Set<String> supportedProtocols, Thread.UncaughtExceptionHandler uncaughtExceptionHandler) throws NetworkException {
         QueuedThreadPool threadPool = new QueuedThreadPool();
         threadPool.setVirtualThreadsExecutor(Executors.newVirtualThreadPerTaskExecutor());
 
@@ -61,7 +62,7 @@ public class HttpTransport extends Transport<Session> {
         ServletContextHandler servletContext = new ServletContextHandler();
         servletContext.setContextPath("/");
 
-        servletContext.addServlet(new ServletHolder(new WebSocketServletConfiguration(this)), "/ws");
+        servletContext.addServlet(new ServletHolder(new WebSocketServletConfiguration(this, supportedProtocols)), "/ws");
         servletContext.addServlet(httpBuilderTransport.getServletHolder(), "/");
 
         //Возможно есть регистрируемые фильтры
